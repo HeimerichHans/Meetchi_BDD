@@ -33,18 +33,22 @@ CREATE TABLE meetchi.contact (
 );
 
 CREATE TABLE meetchi.status (
+	id serial NOT NULL,
 	utilisateurid int NULL,
 	estvisible bool NOT NULL DEFAULT true,
 	estactif bool NOT NULL DEFAULT true,
 	estenligne bool NOT NULL DEFAULT false,
+	CONSTRAINT status_pk PRIMARY KEY (id),
 	CONSTRAINT status_fk FOREIGN KEY (utilisateurid) REFERENCES meetchi.utilisateur(id)
 );
 
 CREATE TABLE meetchi.identification (
+	id serial NOT NULL,
 	utilisateurid int NOT NULL,
 	email varchar(100) NOT NULL,
 	numerotelephone varchar(13) NOT NULL,
 	motdepasse varchar NOT NULL,
+	CONSTRAINT identification_pk PRIMARY KEY (id),
 	CONSTRAINT identification_fk FOREIGN KEY (utilisateurid) REFERENCES meetchi.utilisateur(id)
 );
 
@@ -55,6 +59,7 @@ CREATE TABLE meetchi.tag (
 );
 
 CREATE TABLE meetchi.listetag (
+	id serial NOT NULL,
 	utilisateurid int NOT NULL,
 	tag1 int NULL,
 	tag2 int NULL,
@@ -62,6 +67,7 @@ CREATE TABLE meetchi.listetag (
 	tag4 int NULL,
 	tag5 int NULL,
 	tag6 int NULL,
+	CONSTRAINT listetag_pk PRIMARY KEY (id),
 	CONSTRAINT listetag_fk FOREIGN KEY (utilisateurid) REFERENCES meetchi.utilisateur(id),
 	CONSTRAINT listetag_fk_1 FOREIGN KEY (tag1) REFERENCES meetchi.tag(id),
 	CONSTRAINT listetag_fk_2 FOREIGN KEY (tag2) REFERENCES meetchi.tag(id),
@@ -90,12 +96,14 @@ CREATE TABLE meetchi.signalement (
 );
 
 CREATE TABLE meetchi.message (
+	id serial NOT NULL,
 	contactid int NOT NULL,
 	"date" date NOT NULL,
 	message varchar(512) NOT NULL,
 	auteurid int NOT NULL,
 	estediter bool NOT NULL DEFAULT false,
 	estsupprimer bool NOT NULL DEFAULT false,
+	CONSTRAINT message_pk PRIMARY KEY (id),
 	CONSTRAINT message_fk_1 FOREIGN KEY (contactid) REFERENCES meetchi.contact(id),
 	CONSTRAINT message_fk_2 FOREIGN KEY (auteurid) REFERENCES meetchi.utilisateur(id)
 );
